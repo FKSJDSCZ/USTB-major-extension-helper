@@ -54,6 +54,7 @@ class MainWindowController(QObject):
 		self.view_.mainWindow_.startWeekBox.addItems(self.model_.startWeekList_)
 		self.view_.mainWindow_.endWeekBox.addItems(self.model_.endWeekList_)
 		self.view_.mainWindow_.dayBox.addItems(self.model_.dayList_)
+		self.view_.mainWindow_.logPlainEdit.setMaximumBlockCount(50)
 		self.view_.show()
 
 	def _onQueryBtnClicked(self) -> None:
@@ -87,7 +88,13 @@ class MainWindowController(QObject):
 
 	def _onOperateCourseBtnClicked(self) -> None:
 		courseInfo = self.model_.courseInfoList_[self.model_.selectedCourse_.row()]
-		self.service_.operateCourse(not courseInfo["selected"], kkid=courseInfo["kcid"], jtxh=courseInfo["jtxh"])
+		self.service_.operateCourse(
+			not courseInfo["selected"],
+			courseInfo["kcmc"],
+			True,
+			kkid=courseInfo["kcid"],
+			jtxh=courseInfo["jtxh"]
+		)
 
 	def _onSwitchAutoBtnClicked(self) -> None:
 		if self.model_.autoCourseInfoList_:
@@ -107,7 +114,7 @@ class MainWindowController(QObject):
 		self.view_.mainWindow_.addAutoBtn.setDisabled(courseInfo["selected"])
 
 	def _onAutoCourseTableClicked(self) -> None:
-		self.model_.selectedAutoCourse = self.view_.mainWindow_.autoCourseTableView.selectionModel().selectedRows()
+		self.model_.selectedAutoCourse_ = self.view_.mainWindow_.autoCourseTableView.selectionModel().selectedRows()
 
 	def _onExit(self) -> None:
 		self.view_.close()

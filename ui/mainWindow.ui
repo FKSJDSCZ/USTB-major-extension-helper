@@ -667,7 +667,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="logOutput">
+         <widget class="QPlainTextEdit" name="logPlainEdit">
           <property name="readOnly">
            <bool>true</bool>
           </property>

@@ -1,6 +1,6 @@
+import logging
 import sys
 import urllib3
-import logging
 
 from PySide6.QtWidgets import QApplication
 
@@ -10,16 +10,11 @@ from view.MainWindowView import MainWindowView
 from controller.LoginController import LoginController
 from controller.MainWindowController import MainWindowController
 from service.LoginService import LoginService
-
 from service.MainWindowService import MainWindowService
 from model.MainWindowModel import MainWindowModel
+from entity.GuiLogger import guiLogger
 
 urllib3.disable_warnings()
-
-logging.basicConfig(
-	format='%(asctime)s - %(filename)s - %(funcName)s: %(lineno)s - %(levelname)s - %(message)s',
-	level=logging.DEBUG
-)
 
 if __name__ == '__main__':
 	manager = NetworkAccessManager(None)
@@ -28,6 +23,11 @@ if __name__ == '__main__':
 
 	loginView = LoginView()
 	mainWindowView = MainWindowView()
+
+	guiLogger.config(
+		guiWidget=mainWindowView.mainWindow_.logPlainEdit,
+		logLevel=logging.DEBUG
+	)
 
 	mainWindowModel = MainWindowModel()
 

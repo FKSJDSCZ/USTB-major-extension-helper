@@ -3,6 +3,8 @@ from PySide6.QtCore import QObject, Signal
 from view.LoginView import LoginView
 from service.LoginService import LoginService
 
+from entity.GuiLogger import guiLogger
+
 
 class LoginController(QObject):
 	toMainWindow = Signal(str)
@@ -25,6 +27,7 @@ class LoginController(QObject):
 		self.service_.loginStatusUpdated.connect(self._onLoginStatusUpdated)
 
 	def _onRefreshBtnClicked(self):
+		guiLogger.info("Refresh QR Code")
 		self.view_.loginWindow_.warningLabel.clear()
 		self.service_.getToken()
 

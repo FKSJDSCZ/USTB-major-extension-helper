@@ -1,9 +1,10 @@
 import json
-import logging
 from urllib.parse import urlencode
 
 from PySide6.QtCore import QUrl, QByteArray, QObject
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply, QSsl, QSslSocket, QSslConfiguration
+
+from entity.GuiLogger import guiLogger
 
 
 class NetworkAccessManager(QNetworkAccessManager):
@@ -35,8 +36,8 @@ class NetworkAccessManager(QNetworkAccessManager):
 		reply = super().get(self.prepareRequest(url, params))
 		# There is a bug. "reply" can be QStandardItem object occasionally.
 		if not isinstance(reply, QNetworkReply):
-			logging.critical(f"{type(reply)}, {reply.parent()}")
-			return
+			guiLogger.critical(f"{type(reply)}, {reply.parent()}")
+			return QNetworkReply()
 		reply.finished.connect(lambda: self._handleRedirect(reply, callback, allow_redirects, 0, *other))
 		return reply
 
@@ -88,7 +89,7 @@ class NetworkAccessManager(QNetworkAccessManager):
 				reply.deleteLater()
 				newReply = super().get(QNetworkRequest(redirectUrl))
 				newReply.finished.connect(lambda: self._handleRedirect(newReply, callback, allow_redirects, redirect_count + 1, *other))
-				logging.debug(f"Redirect to {redirectUrl.toString()}")
+				guiLogger.debug(f"Redirect to {redirectUrl.toString()}")
 				return
 
 		if callback:

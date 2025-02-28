@@ -430,12 +430,12 @@ class Ui_mainWindow(object):
 
         self.logLayout.addWidget(self.label_5)
 
-        self.logOutput = QPlainTextEdit(self.layoutWidget)
-        self.logOutput.setObjectName(u"logOutput")
-        self.logOutput.setReadOnly(True)
-        self.logOutput.setTextInteractionFlags(Qt.TextInteractionFlag.LinksAccessibleByKeyboard|Qt.TextInteractionFlag.LinksAccessibleByMouse|Qt.TextInteractionFlag.TextBrowserInteraction|Qt.TextInteractionFlag.TextSelectableByKeyboard|Qt.TextInteractionFlag.TextSelectableByMouse)
+        self.logPlainEdit = QPlainTextEdit(self.layoutWidget)
+        self.logPlainEdit.setObjectName(u"logPlainEdit")
+        self.logPlainEdit.setReadOnly(True)
+        self.logPlainEdit.setTextInteractionFlags(Qt.TextInteractionFlag.LinksAccessibleByKeyboard|Qt.TextInteractionFlag.LinksAccessibleByMouse|Qt.TextInteractionFlag.TextBrowserInteraction|Qt.TextInteractionFlag.TextSelectableByKeyboard|Qt.TextInteractionFlag.TextSelectableByMouse)
 
-        self.logLayout.addWidget(self.logOutput)
+        self.logLayout.addWidget(self.logPlainEdit)
 
         self.mainSplitter.addWidget(self.layoutWidget)
 

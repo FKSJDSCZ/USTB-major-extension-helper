@@ -23,6 +23,7 @@ class MainWindowModel:
 		self.courseInfoList_: list[dict[str, str | bool]] = list()
 		self.autoCourseInfoList_: list[dict[str, str | bool]] = list()
 
+		self.logPlainEditMaxBlockCount_: int = 50
 		self.timerInterval_: int = 200
 		self.autoCourseIndex_: int = 0
 
@@ -45,6 +46,6 @@ class MainWindowModel:
 		self.courseTableHeaders_: list[str] = ["课程名称", "选中状态", "学分", "总课时", "任课教师", "开课院系", "专业名称", "上课时间", "容纳人数", "剩余人数（仅供参考）"]
 
 		self.selectedCourse_: QModelIndex = QModelIndex()
-		self.selectedAutoCourse: list[QModelIndex] = list()
+		self.selectedAutoCourse_: list[QModelIndex] = list()
 
 		self.courseTableProxyModel_.setSourceModel(self.courseTableModel_)

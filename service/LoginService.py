@@ -8,6 +8,7 @@ from PySide6.QtGui import QPixmap
 from PySide6.QtNetwork import QNetworkRequest, QNetworkReply
 
 from entity.NetworkAccessManager import NetworkAccessManager
+from entity.GuiLogger import guiLogger
 
 sisAuthDomain = "https://sis.ustb.edu.cn"
 rootDomain = "https://mec.ustb.edu.cn"
@@ -80,6 +81,7 @@ class LoginService(QObject):
 		"""step 3: load Qr Code data, then query Qr code state"""
 		self.qrCodePixmap_.loadFromData(reply.readAll())
 		self.qrCodeUpdated.emit()
+		guiLogger.info("Successfully get Qr Code image data")
 
 		self._sendCheckStateRequest()
 		reply.deleteLater()
@@ -128,6 +130,8 @@ class LoginService(QObject):
 				self._sendCheckStateRequest()
 			else:
 				self.lastQrStateQuery_ = None
+
+			guiLogger.info(f"QR code state info: [{resData['code']}] {resData['message']}")
 		reply.deleteLater()
 
 	def _login(self, reply: QNetworkReply) -> None:
@@ -137,6 +141,8 @@ class LoginService(QObject):
 		errorContent = homePageHtml.xpath("//div[@class='error-content']")
 		if errorContent:
 			self.warningMsgUpdated.emit(errorContent[0].xpath(".//p/text()")[0])
+			guiLogger.warning("Failed to login")
 		else:
 			self.loginStatusUpdated.emit()
+			guiLogger.info("Successfully login")
 		reply.deleteLater()
